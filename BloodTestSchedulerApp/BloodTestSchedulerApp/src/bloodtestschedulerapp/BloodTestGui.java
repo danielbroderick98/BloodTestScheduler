@@ -22,10 +22,10 @@ public class BloodTestGui extends javax.swing.JFrame {
      */
     public BloodTestGui() {
         initComponents();
-                //Initializing the queue
+        //Initializing the queue
         priorityQueue = new PriorityQueue<>();
         listModel = new DefaultListModel<>();
-                // Setup the JList with the DefaultListModel
+        //Setup the JList with the DefaultListModel
         patientsList.setModel(listModel);
     }
 
@@ -56,7 +56,7 @@ public class BloodTestGui extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         patientsList = new javax.swing.JList<>();
         nowShowBtn = new javax.swing.JButton();
-        nextPatientBtn = new javax.swing.JButton();
+        noShowPatientBtn = new javax.swing.JButton();
         viewPatientBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,14 +117,14 @@ public class BloodTestGui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(patientsList);
 
-        nowShowBtn.setText("No Shows");
+        nowShowBtn.setText("Display No Shows");
         nowShowBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nowShowBtnActionPerformed(evt);
             }
         });
 
-        nextPatientBtn.setText("Next Patient");
+        noShowPatientBtn.setText("Patient No Show");
 
         viewPatientBtn.setText("View Priority Patients");
         viewPatientBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -140,11 +140,11 @@ public class BloodTestGui extends javax.swing.JFrame {
             .addGroup(doctorPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(viewPatientBtn)
-                .addGap(18, 18, 18)
-                .addComponent(nextPatientBtn)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
+                .addComponent(noShowPatientBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(nowShowBtn)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         doctorPanelLayout.setVerticalGroup(
@@ -154,7 +154,7 @@ public class BloodTestGui extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nowShowBtn)
-                    .addComponent(nextPatientBtn)
+                    .addComponent(noShowPatientBtn)
                     .addComponent(viewPatientBtn))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
@@ -346,8 +346,8 @@ public class BloodTestGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton nextPatientBtn;
     private javax.swing.JRadioButton noHWBtn;
+    private javax.swing.JButton noShowPatientBtn;
     private javax.swing.JButton nowShowBtn;
     private javax.swing.JList<String> patientsList;
     private javax.swing.JComboBox<String> priorityBox;

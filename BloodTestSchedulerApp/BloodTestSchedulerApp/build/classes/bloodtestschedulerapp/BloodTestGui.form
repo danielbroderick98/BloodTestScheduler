@@ -240,11 +240,11 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="viewPatientBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="nextPatientBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="noShowPatientBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                       <Component id="nowShowBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
               </Group>
@@ -256,7 +256,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="nowShowBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="nextPatientBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="noShowPatientBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="viewPatientBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="43" max="32767" attributes="0"/>
@@ -292,15 +292,15 @@
             </Container>
             <Component class="javax.swing.JButton" name="nowShowBtn">
               <Properties>
-                <Property name="text" type="java.lang.String" value="No Shows"/>
+                <Property name="text" type="java.lang.String" value="Display No Shows"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nowShowBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="nextPatientBtn">
+            <Component class="javax.swing.JButton" name="noShowPatientBtn">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Next Patient"/>
+                <Property name="text" type="java.lang.String" value="Patient No Show"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="viewPatientBtn">
