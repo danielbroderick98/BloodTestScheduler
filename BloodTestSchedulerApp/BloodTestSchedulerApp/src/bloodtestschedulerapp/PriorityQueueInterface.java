@@ -22,6 +22,6 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     //Removing and returning the highest-priority element
     T dequeue();
     
-    //Printing the current state of the queue (could use toString as an alternative)
+    //Printing the current state of the queue
     String printQueue();
 }
