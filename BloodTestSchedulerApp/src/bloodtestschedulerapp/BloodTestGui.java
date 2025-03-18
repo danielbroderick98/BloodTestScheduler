@@ -4,17 +4,41 @@
  */
 package bloodtestschedulerapp;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author dbrod
  */
 public class BloodTestGui extends javax.swing.JFrame {
+    //Creating Priority queue
+    private PriorityQueue<Person> priorityQueue;
+    //Creating a queue for now shows
+    private Queue<String> noShowQueue;
+    //Creating a queue for patients
+    private Queue<Person> allPatientsQueue;
+    //Initialising DefaultListModel to display patients in JList
+    DefaultListModel<String> listModel = new DefaultListModel<>();
 
     /**
      * Creates new form BloodTestGui
      */
     public BloodTestGui() {
         initComponents();
+        //Initializing the Priority queue
+        priorityQueue = new PriorityQueue<>();
+        //Initializing the queues
+        noShowQueue = new Queue<>();
+        allPatientsQueue = new Queue();
+        //Initializing the DefaultListModel
+        listModel = new DefaultListModel<>();
+        //Setup the JList with the DefaultListModel
+        patientsList.setModel(listModel);
+        //Setting the panels to be not visible
+        patientPanel.setVisible(false);
+        doctorPanel.setVisible(false);
     }
 
     /**
@@ -28,42 +52,140 @@ public class BloodTestGui extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        txtName = new javax.swing.JTextField();
+        doctorPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        patientsList = new javax.swing.JList<>();
+        noShowBtn = new javax.swing.JButton();
+        noShowPatientBtn = new javax.swing.JButton();
+        viewPatientBtn = new javax.swing.JButton();
+        removePatientBtn = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        patientPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
         priorityBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtGPDetails = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtAge = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtAges = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         yesHWBtn = new javax.swing.JRadioButton();
         noHWBtn = new javax.swing.JRadioButton();
-        addPatBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jLabel5 = new javax.swing.JLabel();
+        addPatientBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
+        doctorPanel.setBackground(new java.awt.Color(0, 153, 153));
+
+        patientsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(patientsList);
+
+        noShowBtn.setText("Display No Shows");
+        noShowBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noShowBtnActionPerformed(evt);
+            }
+        });
+
+        noShowPatientBtn.setText(" Add Patient To No Show");
+        noShowPatientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noShowPatientBtnActionPerformed(evt);
+            }
+        });
+
+        viewPatientBtn.setText("View Priority Patients");
+        viewPatientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewPatientBtnActionPerformed(evt);
+            }
+        });
+
+        removePatientBtn.setText("Remove Patient");
+        removePatientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePatientBtnActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("View All Patients");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout doctorPanelLayout = new javax.swing.GroupLayout(doctorPanel);
+        doctorPanel.setLayout(doctorPanelLayout);
+        doctorPanelLayout.setHorizontalGroup(
+            doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doctorPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(doctorPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewPatientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(3, 3, 3)
+                        .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(removePatientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(doctorPanelLayout.createSequentialGroup()
+                                .addComponent(noShowPatientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(noShowBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+        );
+        doctorPanelLayout.setVerticalGroup(
+            doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(doctorPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noShowBtn)
+                    .addComponent(noShowPatientBtn)
+                    .addComponent(viewPatientBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(doctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removePatientBtn)
+                    .addComponent(jButton3))
+                .addContainerGap())
+        );
+
+        patientPanel.setBackground(new java.awt.Color(204, 204, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Name:");
 
-        priorityBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Urgernt", "Medium", "Low" }));
+        priorityBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Urgent", "Medium", "Low" }));
         priorityBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priorityBoxActionPerformed(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Priority:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("GP details:");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Age:");
 
-        jLabel5.setText("Hostpital ward:");
-
+        buttonGroup1.add(yesHWBtn);
         yesHWBtn.setText("Yes");
         yesHWBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +193,7 @@ public class BloodTestGui extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(noHWBtn);
         noHWBtn.setText("No");
         noHWBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,99 +201,141 @@ public class BloodTestGui extends javax.swing.JFrame {
             }
         });
 
-        addPatBtn.setText("Request Test");
-        addPatBtn.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setText("Hostpital ward:");
+
+        addPatientBtn.setText("Add To Waiting List");
+        addPatientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPatBtnActionPerformed(evt);
+                addPatientBtnActionPerformed(evt);
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Blood Test Form");
+
+        javax.swing.GroupLayout patientPanelLayout = new javax.swing.GroupLayout(patientPanel);
+        patientPanel.setLayout(patientPanelLayout);
+        patientPanelLayout.setHorizontalGroup(
+            patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(patientPanelLayout.createSequentialGroup()
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(patientPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(noHWBtn)
+                            .addComponent(yesHWBtn))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(patientPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(patientPanelLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addGap(18, 18, 18)
+                                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAge)
+                                    .addComponent(txtGPDetails)
+                                    .addComponent(priorityBox, 0, 152, Short.MAX_VALUE)
+                                    .addComponent(txtName)))
+                            .addComponent(addPatientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, patientPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(31, 31, 31))
+        );
+        patientPanelLayout.setVerticalGroup(
+            patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(patientPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(priorityBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtGPDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(patientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(yesHWBtn)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(noHWBtn)
+                .addGap(5, 5, 5)
+                .addComponent(addPatientBtn)
+                .addGap(30, 30, 30))
+        );
+
+        jButton1.setText("Blood Test Form");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
+
+        jButton2.setText("Doctors List");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(noHWBtn)
-                    .addComponent(priorityBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtName)
-                    .addComponent(txtGPDetails)
-                    .addComponent(txtAges)
-                    .addComponent(yesHWBtn)
-                    .addComponent(addPatBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(patientPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doctorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(181, 181, 181))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(priorityBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtGPDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtAges, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(yesHWBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(noHWBtn))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addComponent(addPatBtn)
-                .addContainerGap(209, Short.MAX_VALUE))
+                    .addComponent(patientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(doctorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -188,10 +353,327 @@ public class BloodTestGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_noHWBtnActionPerformed
 
-    private void addPatBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addPatBtnActionPerformed
+    private void addPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientBtnActionPerformed
+        //Retrieving the details from the GUI
+        String name = txtName.getText();
+        String priority = (String) priorityBox.getSelectedItem();
+        String gpDetails = txtGPDetails.getText();
+        String ageText = txtAge.getText().trim();
+        boolean fromWard = yesHWBtn.isSelected() || noHWBtn.isSelected();
+        
+        //Error checking to see if user entered all fields
+        if (name.isEmpty() || priority == null || gpDetails.isEmpty() || ageText.isEmpty() || !fromWard) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+            return;
+        }
+        
+        //Checking if age is a valid number
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+            if (age < 0) {
+                //Preventing negative number
+                throw new NumberFormatException(); 
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid age!");
+            return;
+        }
 
+        //Creating a person object with these details
+        Person newPerson = new Person(name, priority, gpDetails, age, fromWard);
+
+        //Adding new person to queue
+        allPatientsQueue.enqueue(newPerson);
+        //Adding the new person to the priority queue
+        priorityQueue.enqueue(newPerson);
+    }//GEN-LAST:event_addPatientBtnActionPerformed
+
+    private void noShowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowBtnActionPerformed
+       //Error message if the noShowQueue is empty
+        if (noShowQueue.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No patients in the No-Show list.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            //Clearing the patientsList
+            patientsList.setModel(new DefaultListModel<>());
+            return;
+        }
+        
+        //Creating a default list model to display the no shows in the patientsList
+        DefaultListModel<String> noShowList = new DefaultListModel<>();
+        
+        //Temporary queue to keep the elements in order while iterating
+        Queue<String> tempQueue = new Queue<>();
+        
+        //Iterating through the queue and adding them to the noShowList
+        while (!noShowQueue.isEmpty()) {
+            //Removing from the original queue
+            String patient = noShowQueue.dequeue();
+            //Adding to the no show list
+            noShowList.addElement(patient);
+            //Storing in the temporary queue
+            tempQueue.enqueue(patient);
+        }
+        
+        //Restoring the original queue from the tempQueue
+        while (!tempQueue.isEmpty()) {
+            noShowQueue.enqueue(tempQueue.dequeue());
+        }
+        
+        //Setting the model to the patientsList
+        patientsList.setModel(noShowList);
+    }//GEN-LAST:event_noShowBtnActionPerformed
+
+    private void viewPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPatientBtnActionPerformed
+        //Clearing the current list in the DefaultListModel
+        listModel.clear();
+
+        //Creating a temporary queue to preserve the original queue
+        PriorityQueue<Person> tempQueue = new PriorityQueue<>();
+
+        //Iterating through the priority queue, dequeue each patient, and add them to the DefaultListModel
+        while (!priorityQueue.isEmpty()) {
+            Person patient = priorityQueue.dequeue();
+            //Adding patient to list model
+            listModel.addElement(patient.toString());
+            //Enqueueing the patient to the temporary queue
+            tempQueue.enqueue(patient);
+        }
+
+        //Enqueueing the patients back into the priority queue from the temporary queue
+        while (!tempQueue.isEmpty()) {
+            priorityQueue.enqueue(tempQueue.dequeue());
+        }
+
+        //Setting the updated listModel for the JList to reflect the current patients
+        patientsList.setModel(listModel);
+    }//GEN-LAST:event_viewPatientBtnActionPerformed
+
+    private void noShowPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noShowPatientBtnActionPerformed
+        //Retrieving the selected patient from the patientList
+        String selectedPatient = patientsList.getSelectedValue();
+        
+        //Error checking to see if user selected patient
+        if (selectedPatient == null) {
+            JOptionPane.showMessageDialog(null, "Please select a patient!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //Creating a temporary priority queue to hold the patients that should remain
+        PriorityQueue<Person> tempQueue = new PriorityQueue<>();
+        
+        
+        //Iterating through the priority queue and adding all patients to the temporary queue except the selected one
+        while (!priorityQueue.isEmpty()) {
+            Person patient = priorityQueue.dequeue();
+            
+            if (!patient.toString().equals(selectedPatient)) {
+                //Adding the patient to the temp queue
+                tempQueue.enqueue(patient);
+            }
+        }
+
+        //Making the priority queue the temp queue
+        priorityQueue = tempQueue;
+        
+        //Creating a temporary queue for allPatientsQueue
+        Queue<Person> tempAllPatientsQueue = new Queue<>();
+
+        //Removing from the allPatientsQueue (FIFO)
+        while (!allPatientsQueue.isEmpty()) {
+            Person patient = allPatientsQueue.dequeue();
+            if (!patient.toString().equals(selectedPatient)) {
+                tempAllPatientsQueue.enqueue(patient);
+            }
+        }
+        
+        //Updating the all patients queue with tempAllPatientsQueue
+        allPatientsQueue = tempAllPatientsQueue;
+
+        //Recursion method being called
+        checkNoShowQueueSize();
+        
+        //Adding the patient to the queue using enqueue
+        noShowQueue.enqueue(selectedPatient);
+        
+        //Refreshing the patient list in the GUI
+        //Clearing the list model before adding updated patients
+        listModel.clear();
+        
+        //Copying elements from priorityQueue into a new temporary queue
+        PriorityQueue<Person> queueCopy = new PriorityQueue<>();
+
+        //Iterating over the original priorityQueue and adding its elements to the new queueCopy
+        while (!priorityQueue.isEmpty()) {
+            Person patient = priorityQueue.dequeue();
+            queueCopy.enqueue(patient);  
+        }
+
+        //Adding the patients back into the priorityQueue
+        while (!queueCopy.isEmpty()) {
+            priorityQueue.enqueue(queueCopy.dequeue());
+        }
+
+        //Dequing from the queueCopy into the listModel
+        while (!queueCopy.isEmpty()) {
+            listModel.addElement(queueCopy.dequeue().toString());
+        }
+        
+        //Copying elements from allPatientsQueue into a new temporary queue
+        Queue<Person> allPatientsQueueCopy = new Queue<>();
+
+        //Iterating over the original allPatientsQueue and adding its elements to allPatientsQueueCopy
+        while (!allPatientsQueue.isEmpty()) {
+            Person patient = allPatientsQueue.dequeue();
+            allPatientsQueueCopy.enqueue(patient);
+        }
+
+        //Adding the patients back into allPatientsQueue
+        while (!allPatientsQueueCopy.isEmpty()) {
+            allPatientsQueue.enqueue(allPatientsQueueCopy.dequeue());
+        }
+
+        //Dequeuing from allPatientsQueueCopy into the listModel
+        while (!allPatientsQueueCopy.isEmpty()) {
+            listModel.addElement(allPatientsQueueCopy.dequeue().toString());
+        }
+        
+        //Setting the updated listModel for the JList to reflect the current patients
+        patientsList.setModel(listModel);
+    }//GEN-LAST:event_noShowPatientBtnActionPerformed
+
+    private void removePatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePatientBtnActionPerformed
+        //Getting the selected patient from the patientsList
+        String selectedName = patientsList.getSelectedValue();
+
+        //If nothing is selected, shows a prompt
+        if (selectedName == null) {
+            JOptionPane.showMessageDialog(null, "Please select a patient to remove.");
+            return;
+        }
+
+        //Creating a temporary priority queue to hold the patients that should remain
+        PriorityQueue<Person> tempQueue = new PriorityQueue<>();
+
+        //Iterating through the priority queue and adding all patients to the temporary queue except the selected one
+        while (!priorityQueue.isEmpty()) {
+            Person patient = priorityQueue.dequeue();
+            if (!patient.toString().equals(selectedName)) {
+                tempQueue.enqueue(patient);
+            }
+        }
+
+        //Updating the original priorityQueue with the patients that were not removed
+        priorityQueue = tempQueue;
+        
+        //Creating a temporary queue for allPatientsQueue
+        Queue<Person> tempAllPatientsQueue = new Queue<>();
+
+        //Removing from the allPatientsQueue (FIFO)
+        while (!allPatientsQueue.isEmpty()) {
+            Person patient = allPatientsQueue.dequeue();
+            if (!patient.toString().equals(selectedName)) {
+                tempAllPatientsQueue.enqueue(patient);
+            }
+        }
+        
+        //Updating the all patients queue with tempAllPatientsQueue
+        allPatientsQueue = tempAllPatientsQueue;
+        
+
+        //After removal, refreshing the patients list directly in the GUI
+        listModel.clear();
+
+        //Copying elements from priorityQueue into a new temporary queue
+        PriorityQueue<Person> queueCopy = new PriorityQueue<>();
+
+        //Iterating over the original priorityQueue and adding its elements to the new queueCopy
+        while (!priorityQueue.isEmpty()) {
+            Person patient = priorityQueue.dequeue();
+            queueCopy.enqueue(patient);  // Add patients to the queueCopy
+        }
+
+        //Adding the patients back into the priorityQueue
+        while (!queueCopy.isEmpty()) {
+            priorityQueue.enqueue(queueCopy.dequeue());
+        }
+
+        //Dequing from the queueCopy into the listModel
+        while (!queueCopy.isEmpty()) {
+            listModel.addElement(queueCopy.dequeue().toString());
+        }
+        
+        //Copying elements from allPatientsQueue into a new temporary queue
+        Queue<Person> allPatientsQueueCopy = new Queue<>();
+
+        //Iterating over the original allPatientsQueue and adding its elements to allPatientsQueueCopy
+        while (!allPatientsQueue.isEmpty()) {
+            Person patient = allPatientsQueue.dequeue();
+            allPatientsQueueCopy.enqueue(patient);
+        }
+
+        //Adding the patients back into allPatientsQueue
+        while (!allPatientsQueueCopy.isEmpty()) {
+            allPatientsQueue.enqueue(allPatientsQueueCopy.dequeue());
+        }
+
+        //Dequeuing from allPatientsQueueCopy into the listModel
+        while (!allPatientsQueueCopy.isEmpty()) {
+            listModel.addElement(allPatientsQueueCopy.dequeue().toString());
+        }
+
+        //Setting the updated listModel for the JList to show the current patients
+        patientsList.setModel(listModel);
+    }//GEN-LAST:event_removePatientBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Setting the patient panel visible
+        patientPanel.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Setting the doctor panel visible
+        doctorPanel.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //Displaying all patients
+        displayAllPatients();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    //Recursion method to be called in noShowPatientBtn
+    private void checkNoShowQueueSize() {
+        if (noShowQueue.size() >= 5) {
+            String removedPatient = noShowQueue.dequeue();
+            JOptionPane.showMessageDialog(null, removedPatient + " removed from No-Show Queue");
+
+            //Recursive call to check again if the queue still has 5 or more patients
+            checkNoShowQueueSize();
+        }
+    }
+    
+    //Method to display all patients
+    private void displayAllPatients() {
+        listModel.clear();
+
+        //Temporary queue to preserve original order
+        Queue<Person> tempQueue = new Queue<>();
+
+        //Iterating through the queue and display each patient
+        while (!allPatientsQueue.isEmpty()) {
+            Person patient = allPatientsQueue.dequeue();
+            listModel.addElement(patient.toString());
+            tempQueue.enqueue(patient);
+        }
+
+        //Restoring original queue order
+        while (!tempQueue.isEmpty()) {
+            allPatientsQueue.enqueue(tempQueue.dequeue());
+        }
+
+        //Setting the updated list model to the JList
+        patientsList.setModel(listModel);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -228,21 +710,31 @@ public class BloodTestGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addPatBtn;
+    private javax.swing.JButton addPatientBtn;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JPanel doctorPanel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton noHWBtn;
+    private javax.swing.JButton noShowBtn;
+    private javax.swing.JButton noShowPatientBtn;
+    private javax.swing.JPanel patientPanel;
+    private javax.swing.JList<String> patientsList;
     private javax.swing.JComboBox<String> priorityBox;
-    private javax.swing.JTextField txtAges;
+    private javax.swing.JButton removePatientBtn;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtGPDetails;
     private javax.swing.JTextField txtName;
+    private javax.swing.JButton viewPatientBtn;
     private javax.swing.JRadioButton yesHWBtn;
     // End of variables declaration//GEN-END:variables
 }

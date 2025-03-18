@@ -21,6 +21,7 @@ public class BloodTestSchedulerApp {
                 new BloodTestGui().setVisible(true);
             }
         });
+ 
     }
     
 }
